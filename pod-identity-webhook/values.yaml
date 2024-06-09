@@ -1,0 +1,16 @@
+image:
+  tag: v0.5.4
+config:
+  annotationPrefix: eks.amazonaws.com
+  defaultAwsRegion: ""
+  stsRegionalEndpoint: false
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 65534
+  runAsGroup: 65534
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop: ["ALL"]
+  seccompProfile:
+    type: RuntimeDefault

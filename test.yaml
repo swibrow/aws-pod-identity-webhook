@@ -1,0 +1,52 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: test
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pitower-test
+  namespace: test
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::633355703129:role/pitower-test
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pitower-test
+  namespace: test
+spec:
+  selector:
+    matchLabels:
+      app: pitower-test
+  template:
+    metadata:
+      labels:
+        app: pitower-test
+    spec:
+      serviceAccountName: pitower-test
+      containers:
+        - name: pitower-test
+          image: amazon/aws-cli
+          command: ["aws", "s3api", "list-buckets", "--no-cli-pager"]
+
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65534
+            runAsGroup: 65534
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+            seccompProfile:
+              type: RuntimeDefault
+
+          volumeMounts:
+            - name: aws
+              mountPath: /.aws
+              readOnly: false
+      volumes:
+        - name: aws
+          emptyDir: {}
