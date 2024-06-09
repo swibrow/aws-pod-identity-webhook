@@ -1,0 +1,6 @@
+cluster:
+  apiServer:
+    extraArgs:
+        service-account-issuer: https://raw.githubusercontent.com/swibrow/aws-pod-identity-webhook/main
+        service-account-jwks-uri: https://192.168.0.191:6443/openid/v1/jwks
+  allowSchedulingOnControlPlanes: true
