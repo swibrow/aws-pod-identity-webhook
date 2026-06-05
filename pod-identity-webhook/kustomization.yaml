@@ -6,7 +6,7 @@ resources:
 helmCharts:
   - name: amazon-eks-pod-identity-webhook
     repo: https://jkroepke.github.io/helm-charts
-    version: 2.1.3
+    version: 2.6.5
     releaseName: aws-identity-webhook
     namespace: aws-identity-webhook
     valuesFile: values.yaml
